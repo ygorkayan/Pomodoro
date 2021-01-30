@@ -1,3 +1,5 @@
+import PomodoroConfig from "../Pomodoro.config";
+
 export interface IAction {
   type: string;
   payload: any;
@@ -10,10 +12,9 @@ export interface IState {
   descansando: boolean;
 }
 
-export interface IUsePomodoro {
-  tempo: number;
-  concluidos: Record<string, number>[];
-  descansando: boolean;
-  iniciar: () => void;
-  parar: () => void;
-}
+export const initialState: IState = {
+  concluidos: [],
+  tempo: PomodoroConfig.tempoPomodoro,
+  funcionando: false,
+  descansando: false,
+};

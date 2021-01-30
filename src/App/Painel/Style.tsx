@@ -4,13 +4,19 @@ export const Container = styled.div`
   background-color: ${(props) =>
     props.color === "verde" ? "#56bd56" : "#d04643"};
   margin-top: 1rem;
-  height: 20vh;
-  width: 45vw;
+  height: 220px;
+  width: 900px;
   border-radius: 0.5rem;
   padding: 0px 1rem;
   display: flex;
   align-items: center;
   flex-direction: column;
+
+  @media (max-width: 900px) {
+    width: 100%;
+    border-radius: 0px;
+    margin-top: 0px;
+  }
 `;
 
 export const Menu = styled.div`
@@ -39,7 +45,6 @@ export const Cronometro = styled.p`
 `;
 
 export const AreaBtn = styled.div`
-  width: 50%;
   display: flex;
   justify-content: space-between;
 `;
@@ -53,4 +58,9 @@ export const Btn = styled.button`
   color: #fff;
   text-transform: uppercase;
   border-radius: 0.2rem;
+  margin: 0px 1rem;
+
+  @media (max-width: 900px) {
+    width: 150px;
+  }
 `;

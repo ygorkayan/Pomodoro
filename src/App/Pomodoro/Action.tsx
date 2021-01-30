@@ -1,18 +1,22 @@
-import { IAction } from "./Interfaces";
+import { IAction } from "./Util";
+
+function action(type: string, payload: any): IAction {
+  return { type, payload };
+}
 
 export default function Actions(dispatch: React.Dispatch<IAction>) {
   return {
-    addConcluido() {
-      dispatch({ type: "addConcluido", payload: { terminadoEm: Date.now() } });
+    tempo(tempo: number) {
+      dispatch(action("tempo", tempo));
     },
-    cronometro(tempo: number) {
-      dispatch({ type: "tempo", payload: tempo });
+    concluido() {
+      dispatch(action("concluido", { terminadoEm: Date.now() }));
     },
-    funcionando(value: boolean) {
-      dispatch({ type: "funcionando", payload: value });
+    funcionando(valor: boolean) {
+      dispatch(action("funcionando", valor));
     },
     descansando(valor: boolean) {
-      dispatch({ type: "descansando", payload: valor });
+      dispatch(action("descansando", valor));
     },
   };
 }

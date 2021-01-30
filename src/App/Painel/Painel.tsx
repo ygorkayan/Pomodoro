@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Container, Menu, Cronometro, AreaBtn, Btn, BtnConfig } from "./Style";
 import { converteTempo } from "./Util";
 import TuneIcon from "@material-ui/icons/Tune";
 
-import UsePomodoro from "../../Pomodoro/UsePomodoro";
+import { PomodoroContext } from "../Pomodoro/Pomodoro";
 
 export default function Painel() {
-  const { tempo, concluidos, descansando, iniciar, parar } = UsePomodoro();
+  const { tempo, concluidos, descansando, iniciar, parar } = useContext(
+    PomodoroContext
+  );
 
   return (
     <Container color={descansando ? "verde" : "vermelho"}>

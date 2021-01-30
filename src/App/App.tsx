@@ -1,6 +1,8 @@
 import React from "react";
 import styled, { createGlobalStyle } from "styled-components";
-import Painel from "./Components/Painel/Painel";
+import { PomodoroProvider } from "./Pomodoro/Pomodoro";
+import Painel from "./Painel/Painel";
+import Lista from "./Lista/Lista";
 
 const StyledGlobal = createGlobalStyle`
   * {
@@ -14,14 +16,19 @@ const StyledGlobal = createGlobalStyle`
 const Container = styled.div`
   height: 100vh;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
 `;
 
 export default function App() {
   return (
     <Container>
       <StyledGlobal />
-      <Painel />
+      <PomodoroProvider>
+        <Painel />
+        <Lista />
+      </PomodoroProvider>
     </Container>
   );
 }
