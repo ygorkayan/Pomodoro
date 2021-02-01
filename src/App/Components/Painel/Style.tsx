@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  background-color: ${(props) =>
-    props.color === "verde" ? "#56bd56" : "#d04643"};
+  background-color: ${(props) => (props.color ? "#56bd56" : "#d04643")};
   margin-top: 1rem;
   height: 220px;
   width: 900px;

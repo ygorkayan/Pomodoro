@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import { PomodoroProvider } from "./Pomodoro/Pomodoro";
-import Painel from "./Painel/Painel";
-import Lista from "./Lista/Lista";
+import { PomodoroConfigProvider } from "./Pomodoro/ConfigPomodoro";
+import Config from "./Components/Config/Config";
+import Painel from "./Components/Painel/Painel";
+import Lista from "./Components/Lista/Lista";
 
 const StyledGlobal = createGlobalStyle`
   * {
@@ -22,13 +24,25 @@ const Container = styled.div`
 `;
 
 export default function App() {
+  const [configHidden, setConfigHidden] = useState(true);
+
+  function toggleConfigHidden() {
+    return () => setConfigHidden(configHidden ? false : true);
+  }
+
   return (
     <Container>
       <StyledGlobal />
-      <PomodoroProvider>
-        <Painel />
-        <Lista />
-      </PomodoroProvider>
+      <PomodoroConfigProvider>
+        <Config
+          configHidden={configHidden}
+          toggleConfigHidden={toggleConfigHidden()}
+        />
+        <PomodoroProvider>
+          <Painel toggleConfigHidden={toggleConfigHidden()} />
+          <Lista />
+        </PomodoroProvider>
+      </PomodoroConfigProvider>
     </Container>
   );
 }

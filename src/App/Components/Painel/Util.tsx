@@ -7,3 +7,8 @@ export function converteTempo(tempoSeg: number) {
 
   return `${minutosString}:${segundosString}`;
 }
+
+
+export interface IProps {
+  toggleConfigHidden: () => void;
+}

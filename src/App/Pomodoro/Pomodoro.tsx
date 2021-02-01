@@ -1,43 +1,54 @@
-import { useReducer, useEffect, createContext } from "react";
-import Reducer from "./Reducer";
-import Actions from "./Action";
-import { initialState } from "./Util";
-import PomodoroConfig from "../Pomodoro.config";
+import { useEffect, createContext, useState, useContext } from "react";
+import { PomodoroConfigContext } from "./ConfigPomodoro";
 
 export const PomodoroContext = createContext<any>({});
 
 export function PomodoroProvider(props: any) {
-  const [state, dispatch] = useReducer(Reducer, initialState);
-  const { tempo, concluido, funcionando, descansando } = Actions(dispatch);
+  const {
+    configQtdPomodoro,
+    configTempo,
+    configPausaLonga,
+    configPausaCurta,
+  } = useContext(PomodoroConfigContext);
+
+  const [tempo, setTempo] = useState(configTempo.get * 60);
+  const [concluidos, setConcluidos] = useState<number[]>([]);
+  const [funcionando, setFuncionando] = useState(false);
+  const [descansando, setDescansando] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
-      if (!state.funcionando) return;
-      if (state.tempo >= 1) return tempo(-1);
+      if (!funcionando) return;
+      if (tempo >= 1) return setTempo(tempo - 1);
 
-      funcionando(false);
+      setFuncionando(false);
 
-      if (state.descansando) {
-        descansando(false);
-        tempo(PomodoroConfig.tempoPomodoro);
+      if (descansando) {
+        setDescansando(false);
+        setTempo(configTempo.get * 60);
       } else {
-        descansando(true);
-        tempo(PomodoroConfig.tempoPausa);
-        concluido();
+        setDescansando(true);
+        setConcluidos([...concluidos, Date.now()]);
+
+        if ((concluidos.length + 1) % configQtdPomodoro.get === 0) {
+          setTempo(configPausaLonga.get * 60);
+        } else {
+          setTempo(configPausaCurta.get * 60);
+        }
       }
     }, 1000);
-  }, [state.tempo, state.funcionando]);
+  }, [tempo, funcionando]);
 
-  const Pomodoro = {
-    tempo: state.tempo,
-    concluidos: state.concluidos,
-    descansando: state.descansando,
-    iniciar: () => funcionando(true),
-    parar: () => funcionando(false),
+  const Provider = {
+    tempo: tempo,
+    concluidos: concluidos,
+    descansando: descansando,
+    iniciar: () => setFuncionando(true),
+    parar: () => setFuncionando(false),
   };
 
   return (
-    <PomodoroContext.Provider value={Pomodoro}>
+    <PomodoroContext.Provider value={Provider}>
       {props.children}
     </PomodoroContext.Provider>
   );

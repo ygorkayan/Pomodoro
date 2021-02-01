@@ -1,19 +1,18 @@
 import React, { useContext } from "react";
 import { Container, Menu, Cronometro, AreaBtn, Btn, BtnConfig } from "./Style";
-import { converteTempo } from "./Util";
+import { converteTempo, IProps } from "./Util";
+import { PomodoroContext } from "../../Pomodoro/Pomodoro";
 import TuneIcon from "@material-ui/icons/Tune";
 
-import { PomodoroContext } from "../Pomodoro/Pomodoro";
-
-export default function Painel() {
+export default function Painel(props: IProps) {
   const { tempo, concluidos, descansando, iniciar, parar } = useContext(
     PomodoroContext
   );
 
   return (
-    <Container color={descansando ? "verde" : "vermelho"}>
+    <Container color={descansando}>
       <Menu>
-        <BtnConfig>
+        <BtnConfig onClick={() => props.toggleConfigHidden()}>
           <TuneIcon />
         </BtnConfig>
         <span>Concluidos: {concluidos.length}</span>
