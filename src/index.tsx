@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App/App";
-
+// Ola muundo
 ReactDOM.render(
   <React.StrictMode>
     <App />
